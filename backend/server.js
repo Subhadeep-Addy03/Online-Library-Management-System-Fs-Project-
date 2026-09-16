@@ -7,6 +7,7 @@ import borrowBookRoute from "./src/routes/borrowBookRoute.js";
 import fineRoute from "./src/routes/fineRoute.js";
 import paymentRoute from "./src/routes/paymentRoute.js";
 import cors from "cors"
+import dueDateReminder from "./src/alert/dueDateReminder.js";
 
 const app = express()
 const portNo = process.env.PORT;
@@ -17,6 +18,9 @@ dbConnect()
 
 //Middleware
 app.use(express.json())
+
+//corn
+dueDateReminder()
 
 //Routes
 app.use("/user", userRoute)

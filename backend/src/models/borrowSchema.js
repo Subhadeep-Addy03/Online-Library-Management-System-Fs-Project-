@@ -32,6 +32,10 @@ const borrowSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
+    reminderSent: {
+        type: Boolean,
+        default: false
+    },
     finePaid: {
         type: Boolean,
         default: false

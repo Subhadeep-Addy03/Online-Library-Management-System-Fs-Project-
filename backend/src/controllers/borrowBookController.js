@@ -1,45 +1,110 @@
 import borrowSchema from "../models/borrowSchema.js";
 import bookSchema from "../models/bookSchema.js";
+import userSchema from "../models/userSchema.js";
+import { bookBorrowedEmail } from "../emailVerify/resetPasswordEmail.js";
 
+
+
+// export const borrowBook = async (req, res) => {
+//     try {
+
+//         const { bookId } = req.params;
+//         //Book Check
+//         const bookexist = await bookSchema.findById(bookId);
+//         if (!bookexist) {
+//             return res.status(404).json({
+//                 success: false,
+//                 message: "Book Not Found Or No Book Found"
+//             })
+//         }
+//         //Book Availability 
+//         if (bookexist.availableCopies <= 0) {
+//             return res.status(400).json({
+//                 success: false,
+//                 message: "Book Not Available Right Now."
+//             })
+//         }
+//         ///check if te user already borrowed the same book
+//         const alreadyBorrowed = await borrowSchema.findOne({
+//             userId: req.userId,
+//             bookId: bookId,
+//             status: "borrowed"
+//         });
+//         if (alreadyBorrowed) {
+//             return res.status(400).json({
+//                 success: false,
+//                 message: "You Have Already Borrowed This Book."
+//             })
+//         }
+//         //calculate due date
+//         const borrowDate = new Date();
+//         const dueDate = new Date(borrowDate);
+//         dueDate.setDate(dueDate.getDate() + 3);
+
+//         //create new borrow record
+//         const borrow = await borrowSchema.create({
+//             userId: req.userId,
+//             bookId: bookId,
+//             borrowDate: borrowDate,
+//             dueDate: dueDate,
+//             status: "borrowed"
+//         })
+
+//         bookexist.availableCopies -= 1;
+//         await bookexist.save();
+//         return res.status(200).json({
+//             success: true,
+//             message: "Book Borrowed Successfully",
+//             data: borrow
+//         })
+//     } catch (error) {
+//         return res.status(500).json({
+//             success: false,
+//             message: error.message
+//         })
+//     }
+// }
 
 
 export const borrowBook = async (req, res) => {
     try {
 
         const { bookId } = req.params;
-        //Book Check
+
         const bookexist = await bookSchema.findById(bookId);
+
         if (!bookexist) {
             return res.status(404).json({
                 success: false,
                 message: "Book Not Found Or No Book Found"
             })
         }
-        //Book Availability 
+
         if (bookexist.availableCopies <= 0) {
             return res.status(400).json({
                 success: false,
                 message: "Book Not Available Right Now."
             })
         }
-        ///check if te user already borrowed the same book
+
         const alreadyBorrowed = await borrowSchema.findOne({
             userId: req.userId,
             bookId: bookId,
             status: "borrowed"
         });
+
         if (alreadyBorrowed) {
             return res.status(400).json({
                 success: false,
                 message: "You Have Already Borrowed This Book."
             })
         }
-        //calculate due date
-        const borrowDate = new Date();
-        const dueDate = new Date(borrowDate);
-        dueDate.setDate(dueDate.getDate() + 3);
 
-        //create new borrow record
+        const borrowDate = new Date();
+
+        const dueDate = new Date(borrowDate);
+        dueDate.setDate(dueDate.getDate() + 1);
+
         const borrow = await borrowSchema.create({
             userId: req.userId,
             bookId: bookId,
@@ -50,11 +115,25 @@ export const borrowBook = async (req, res) => {
 
         bookexist.availableCopies -= 1;
         await bookexist.save();
+
+        const userExist = await userSchema.findById(req.userId);
+
+        if (userExist) {
+            await bookBorrowedEmail(
+                userExist.email,
+                userExist.userName,
+                bookexist.title,
+                borrowDate,
+                dueDate
+            );
+        }
+
         return res.status(200).json({
             success: true,
             message: "Book Borrowed Successfully",
             data: borrow
         })
+
     } catch (error) {
         return res.status(500).json({
             success: false,
