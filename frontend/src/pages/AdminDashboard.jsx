@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import API from "../api/axiosInstance";
 
 const AdminDashboard = () => {
     const [stats, setStats] = useState({
@@ -20,21 +20,7 @@ const AdminDashboard = () => {
             setLoading(true);
             setError("");
 
-            const token = localStorage.getItem("accessToken");
-
-            if (!token) {
-                setError("Please login as admin.");
-                return;
-            }
-
-            const response = await axios.get(
-                "http://localhost:9000/user/stats",
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                }
-            );
+            const response = await API.get("/user/stats");
 
             if (response.data.success) {
                 setStats(response.data.data);

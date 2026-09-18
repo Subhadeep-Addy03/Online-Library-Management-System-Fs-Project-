@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import API from "../api/axiosInstance";
 import UpdateBookModal from "../components/UpdateBookModal";
 import DeleteBookModal from "../components/DeleteBookModal";
 import { toast } from "react-hot-toast";
@@ -32,9 +32,7 @@ const AdminManageBooks = () => {
             setLoading(true);
             setError("");
 
-            const response = await axios.get(
-                "http://localhost:9000/book/getallbook"
-            );
+            const response = await API.get("/book/getallbook");
 
             if (response.data.success) {
                 setBooks(response.data.data);
@@ -94,15 +92,8 @@ const AdminManageBooks = () => {
             setError("");
             setSuccess("");
 
-            const token = localStorage.getItem("accessToken");
-
-            if (!token) {
-                setError("Please login as admin first.");
-                return;
-            }
-
-            const response = await axios.put(
-                `http://localhost:9000/book/update/${editingBook._id}`,
+            const response = await API.put(
+                `/book/update/${editingBook._id}`,
                 {
                     title: formData.title,
                     author: formData.author,
@@ -111,11 +102,6 @@ const AdminManageBooks = () => {
                     quantity: Number(formData.quantity),
                     description: formData.description,
                     image: formData.image
-                },
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
                 }
             );
 
@@ -183,20 +169,8 @@ const AdminManageBooks = () => {
             setError("");
             setSuccess("");
 
-            const token = localStorage.getItem("accessToken");
-
-            if (!token) {
-                setError("Please login as admin first.");
-                return;
-            }
-
-            const response = await axios.delete(
-                `http://localhost:9000/book/delete/${bookId}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                }
+            const response = await API.delete(
+                `/book/delete/${bookId}`
             );
 
             if (response.data.success) {

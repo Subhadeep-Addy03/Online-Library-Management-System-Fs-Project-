@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import API from "../api/axiosInstance";
 import confetti from "canvas-confetti";
 import toast from "react-hot-toast";
 import BorrowModal from "../components/BorrowModal";
@@ -18,9 +18,7 @@ const Books = () => {
             setLoading(true);
             setError("");
 
-            const response = await axios.get(
-                "http://localhost:9000/book/getallbook"
-            );
+            const response = await API.get("/book/getallbook");
 
             if (response.data.success) {
                 setBooks(response.data.data);
@@ -75,14 +73,9 @@ const Books = () => {
         try {
             setBorrowLoading(bookId);
 
-            const response = await axios.post(
-                `http://localhost:9000/borrow/borrow-book/${bookId}`,
-                {},
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                }
+            const response = await API.post(
+                `/borrow/borrow-book/${bookId}`,
+                {}
             );
 
             if (response.data.success) {

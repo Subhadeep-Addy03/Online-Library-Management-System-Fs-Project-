@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import API from "../api/axiosInstance";
 import toast from "react-hot-toast";
 
 const Login = () => {
@@ -47,8 +47,8 @@ const Login = () => {
         try {
             setLoading(true);
 
-            const response = await axios.post(
-                "http://localhost:9000/user/login",
+            const response = await API.post(
+                "/user/login",
                 {
                     email,
                     password,

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import axios from "axios";
+import API from "../api/axiosInstance";
 
 const VerifyEmail = () => {
     const { token } = useParams();
@@ -12,8 +12,8 @@ const VerifyEmail = () => {
     useEffect(() => {
         const verifyEmail = async () => {
             try {
-                const response = await axios.get(
-                    "http://localhost:9000/user/verify",
+                const response = await API.get(
+                    "/user/verify",
                     {
                         headers: {
                             Authorization: `Bearer ${token}`,

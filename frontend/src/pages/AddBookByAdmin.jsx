@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "axios";
+import API from "../api/axiosInstance";
 import AddBookModal from "../components/AddBookModal";
 import { toast } from "react-hot-toast"
 
@@ -54,15 +54,8 @@ const AddBook = () => {
             setError("");
             setSuccess("");
 
-            const token = localStorage.getItem("accessToken");
-
-            if (!token) {
-                setError("Please login as admin first.");
-                return;
-            }
-
-            const response = await axios.post(
-                "http://localhost:9000/book/addbook",
+            const response = await API.post(
+                "/book/addbook",
                 {
                     title: formData.title,
                     author: formData.author,
@@ -72,11 +65,6 @@ const AddBook = () => {
                     quantity: Number(formData.quantity),
                     description: formData.description,
                     image: formData.image
-                },
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
                 }
             );
 

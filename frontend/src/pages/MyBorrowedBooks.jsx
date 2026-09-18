@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import API from "../api/axiosInstance";
 import confetti from "canvas-confetti";
 import toast from "react-hot-toast";
 import ReturnModal from "../components/ReturnModal";
@@ -17,21 +17,7 @@ const MyBorrowedBooks = () => {
             setLoading(true);
             setError("");
 
-            const token = localStorage.getItem("accessToken");
-
-            if (!token) {
-                setError("Please login first.");
-                return;
-            }
-
-            const response = await axios.get(
-                "http://localhost:9000/borrow/my-borrowed-books",
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
+            const response = await API.get("/borrow/my-borrowed-books");
 
             if (response.data.success) {
                 setBorrowedBooks(response.data.data);
@@ -75,21 +61,9 @@ const MyBorrowedBooks = () => {
         try {
             setReturningId(borrowId);
 
-            const token = localStorage.getItem("accessToken");
-
-            if (!token) {
-                toast.error("Please login first.");
-                return;
-            }
-
-            const response = await axios.put(
-                `http://localhost:9000/borrow/return-book/${borrowId}`,
-                {},
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
+            const response = await API.put(
+                `/borrow/return-book/${borrowId}`,
+                {}
             );
 
             console.log("RETURN RESPONSE:", response.data);

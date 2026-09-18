@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import API from "../api/axiosInstance";
 import { Link } from "react-router-dom";
 
 const Dashboard = () => {
@@ -10,16 +10,7 @@ const Dashboard = () => {
 
     const getBorrowedBooks = async () => {
         try {
-            const token = localStorage.getItem("accessToken");
-
-            const response = await axios.get(
-                "http://localhost:9000/borrow/my-borrowed-books",
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
+            const response = await API.get("/borrow/my-borrowed-books");
 
             if (response.data.success) {
                 setBorrowedBooks(response.data.data);

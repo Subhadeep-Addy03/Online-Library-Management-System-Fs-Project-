@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import API from "../api/axiosInstance";
 import {
     useSearchParams,
     useNavigate
@@ -58,8 +58,8 @@ const SearchBooks = () => {
             setError("");
 
             const response =
-                await axios.get(
-                    "http://localhost:9000/book/manage",
+                await API.get(
+                    "/book/manage",
                     {
                         params: {
                             search: search,

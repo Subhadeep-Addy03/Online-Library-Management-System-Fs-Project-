@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "axios";
+import API from "../api/axiosInstance";
 
 const ChangePassword = () => {
     const [oldPassword, setOldPassword] = useState("");
@@ -29,18 +29,11 @@ const ChangePassword = () => {
         try {
             setLoading(true);
 
-            const token = localStorage.getItem("accessToken");
-
-            const response = await axios.put(
-                "http://localhost:9000/user/change-password",
+            const response = await API.put(
+                "/user/change-password",
                 {
                     oldPassword,
                     newPassword
-                },
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
                 }
             );
 

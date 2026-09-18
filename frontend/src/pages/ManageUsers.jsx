@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from "react";
-import axios from "axios";
+import API from "../api/axiosInstance";
 
 const ManageUsers = () => {
     const [users, setUsers] = useState([]);
@@ -12,21 +12,7 @@ const ManageUsers = () => {
             setLoading(true);
             setError("");
 
-            const token = localStorage.getItem("accessToken");
-
-            if (!token) {
-                setError("Authorization failed. Please login as admin.");
-                return;
-            }
-
-            const response = await axios.get(
-                "http://localhost:9000/user/getallusers",
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
+            const response = await API.get("/user/getallusers");
 
             if (response.data.success) {
                 setUsers(response.data.data);

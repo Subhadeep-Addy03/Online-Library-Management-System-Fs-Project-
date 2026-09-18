@@ -874,7 +874,7 @@
 import { useEffect, useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import LogoutModal from "./LogoutModal";
-import axios from "axios";
+import API from "../api/axiosInstance";
 import toast from "react-hot-toast";
 
 const Navber = () => {
@@ -949,14 +949,7 @@ const Navber = () => {
                 return;
             }
 
-            const response = await axios.delete(
-                "http://localhost:9000/user/logout",
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
+            const response = await API.delete("/user/logout");
 
             console.log("Logout Response:", response.data);
 

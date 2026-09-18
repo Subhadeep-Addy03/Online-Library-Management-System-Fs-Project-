@@ -302,7 +302,7 @@
 // export default Fine;
 
 import { useEffect, useState } from "react";
-import axios from "axios";
+import API from "../api/axiosInstance";
 
 const Fine = () => {
     const [borrowedBooks, setBorrowedBooks] = useState([]);
@@ -316,16 +316,7 @@ const Fine = () => {
             setLoading(true);
             setError("");
 
-            const token = localStorage.getItem("accessToken");
-
-            const response = await axios.get(
-                "http://localhost:9000/borrow/my-borrowed-books",
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
+            const response = await API.get("/borrow/my-borrowed-books");
 
             if (response.data.success) {
                 let booksData = response.data.data;
@@ -350,14 +341,9 @@ const Fine = () => {
                         await Promise.all(
                             overdueBooks.map(async (borrow) => {
                                 try {
-                                    await axios.put(
-                                        `http://localhost:9000/fine/fineAmmount/${borrow._id}`,
-                                        {},
-                                        {
-                                            headers: {
-                                                Authorization: `Bearer ${token}`,
-                                            },
-                                        }
+                                    await API.put(
+                                        `/fine/fineAmmount/${borrow._id}`,
+                                        {}
                                     );
                                 } catch (error) {
                                     console.log(
@@ -368,14 +354,7 @@ const Fine = () => {
                             })
                         );
 
-                        const updatedResponse = await axios.get(
-                            "http://localhost:9000/borrow/my-borrowed-books",
-                            {
-                                headers: {
-                                    Authorization: `Bearer ${token}`,
-                                },
-                            }
-                        );
+                        const updatedResponse = await API.get("/borrow/my-borrowed-books");
 
                         if (updatedResponse.data.success) {
                             booksData = updatedResponse.data.data;
@@ -405,16 +384,9 @@ const Fine = () => {
         try {
             setCalculatingId(borrowId);
 
-            const token = localStorage.getItem("accessToken");
-
-            const response = await axios.put(
-                `http://localhost:9000/fine/fineAmmount/${borrowId}`,
-                {},
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
+            const response = await API.put(
+                `/fine/fineAmmount/${borrowId}`,
+                {}
             );
 
             if (response.data.success) {
