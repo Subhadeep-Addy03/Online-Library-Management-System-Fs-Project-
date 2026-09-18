@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import bookSchema from "../models/bookSchema.js";
+import cloudinary from "../config/cloudinary.js";
 
 //ADD BOOK BY ADMIN ONLY : 
 
@@ -226,5 +227,50 @@ export const searchSortPaginationBooks = async (req, res) => {
             message: error.message
         });
 
+    }
+}
+
+// UPLOAD BOOK IMAGE TO CLOUDINARY :
+
+export const uploadBookImage = async (req, res) => {
+    try {
+        if (!req.file) {
+            return res.status(400).json({
+                success: false,
+                message: "No image file provided"
+            });
+        }
+
+        // Stream the buffer directly to Cloudinary (no disk write needed)
+        const result = await new Promise((resolve, reject) => {
+            const stream = cloudinary.uploader.upload_stream(
+                {
+                    folder: "library-books",
+                    resource_type: "image",
+                    transformation: [
+                        { width: 800, height: 1100, crop: "limit" },
+                        { quality: "auto", fetch_format: "auto" }
+                    ]
+                },
+                (error, result) => {
+                    if (error) reject(error);
+                    else resolve(result);
+                }
+            );
+            stream.end(req.file.buffer);
+        });
+
+        return res.status(200).json({
+            success: true,
+            message: "Image uploaded successfully",
+            imageUrl: result.secure_url,
+            publicId: result.public_id
+        });
+
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: error.message
+        });
     }
 }
