@@ -2,11 +2,13 @@ import userSchema from "../models/userSchema.js";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv/config";
 import jwt from "jsonwebtoken"
-import { verifyEmail } from "../emailVerify/verifyEmail.js";
+// import { sendVerificationOtp } from "../emailVerify/verifyEmail.js";
 import sessionSchema from "../models/sessionSchema.js";
 import { resetPasswordEmail } from "../emailVerify/resetPasswordEmail.js";
 import bookSchema from "../models/bookSchema.js";
 import borrowSchema from "../models/borrowSchema.js";
+import crypto from "crypto";
+import { sendVerificationOtp } from "../emailVerify/verifyEmail.js";
 
 
 //USER REGISTRATION :
@@ -14,48 +16,97 @@ import borrowSchema from "../models/borrowSchema.js";
 export const userRegistration = async (req, res) => {
     try {
         const { userName, email, password, role } = req.body;
+
         const userExist = await userSchema.findOne({ email });
+
         if (userExist) {
             return res.status(400).json({
                 success: false,
                 message: "User already exist"
-            })
+            });
         }
-        // // Validate role
-        // if (!["buyer", "seller"].includes(role)) {
-        //     return res.status(400).json({
-        //         success: false,
-        //         message: "Invalid role",
-        //     });
-        // }
 
         const hashPassword = await bcrypt.hash(password, 10);
-        const newUser = await userSchema.create({ userName, email, password: hashPassword, role })
-        const token = jwt.sign({ id: newUser._id, role: newUser.role }, process.env.SECRET_KEY, { expiresIn: "5m" })
-        newUser.token = token;
-        await newUser.save()
-        verifyEmail(token, email)
+
+        const verificationOtp = crypto.randomInt(100000, 1000000).toString();
+
+        const verificationOtpExpires = new Date(
+            Date.now() + 10 * 60 * 1000
+        );
+
+        const newUser = await userSchema.create({
+            userName,
+            email,
+            password: hashPassword,
+            role,
+            verificationOtp,
+            verificationOtpExpires
+        });
+        await sendVerificationOtp(verificationOtp, email)
         return res.status(201).json({
             success: true,
-            message: `${role} Register Successfully`,
-            token,
-            // data: newUser
+            message: "Registration successful. OTP sent to your email.",
             user: {
                 id: newUser._id,
                 userName: newUser.userName,
                 email: newUser.email,
-                role: newUser.role,
+                role: newUser.role
             }
-        })
-
+        });
 
     } catch (error) {
         return res.status(500).json({
             success: false,
             message: error.message
-        })
+        });
     }
-}
+};
+
+// export const userRegistration = async (req, res) => {
+//     try {
+//         const { userName, email, password, role } = req.body;
+//         const userExist = await userSchema.findOne({ email });
+//         if (userExist) {
+//             return res.status(400).json({
+//                 success: false,
+//                 message: "User already exist"
+//             })
+//         }
+//         // // Validate role
+//         // if (!["buyer", "seller"].includes(role)) {
+//         //     return res.status(400).json({
+//         //         success: false,
+//         //         message: "Invalid role",
+//         //     });
+//         // }
+
+//         const hashPassword = await bcrypt.hash(password, 10);
+//         const newUser = await userSchema.create({ userName, email, password: hashPassword, role })
+//         const token = jwt.sign({ id: newUser._id, role: newUser.role }, process.env.SECRET_KEY, { expiresIn: "5m" })
+//         newUser.token = token;
+//         await newUser.save()
+//         verifyEmail(token, email)
+//         return res.status(201).json({
+//             success: true,
+//             message: `${role} Register Successfully`,
+//             token,
+//             // data: newUser
+//             user: {
+//                 id: newUser._id,
+//                 userName: newUser.userName,
+//                 email: newUser.email,
+//                 role: newUser.role,
+//             }
+//         })
+
+
+//     } catch (error) {
+//         return res.status(500).json({
+//             success: false,
+//             message: error.message
+//         })
+//     }
+// }
 
 //USER LOGIN :
 

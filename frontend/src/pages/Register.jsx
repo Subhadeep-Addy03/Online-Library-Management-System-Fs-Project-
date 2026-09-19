@@ -59,9 +59,17 @@ const Register = () => {
                 }
             );
 
+            // if (response.data.success) {
+            //     alert("Registration successful! Please verify your email.");
+            //     navigate("/verify");
+            // }
+
             if (response.data.success) {
-                alert("Registration successful! Please verify your email.");
-                navigate("/verify");
+                navigate("/verify", {
+                    state: {
+                        email
+                    }
+                });
             }
         } catch (error) {
             console.error(error);

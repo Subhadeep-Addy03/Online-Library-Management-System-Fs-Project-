@@ -87,7 +87,7 @@ import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Register from './pages/Register'
-import VerifyEmail from './pages/VerifyEmail'
+// import VerifyEmail from './pages/VerifyEmail'
 import VerifyPage from './pages/VerifyPage'
 import Books from './pages/Books'
 import MyBorrowedBooks from './pages/MyBorrowedBooks'
@@ -104,7 +104,7 @@ import AdminManageBooks from './pages/AdminManageBooks'
 import AddBook from './pages/AddBookByAdmin'
 import ManageUsers from './pages/ManageUsers'
 import ProtectedRoute from './components/ProtectedRoute'
-import { Toaster } from "react-hot-toast";
+// import { Toaster } from "react-hot-toast";
 import Navber from './components/Navber'
 
 const AppContent = () => {
@@ -112,7 +112,9 @@ const AppContent = () => {
 
   const hideNavbar =
     location.pathname === "/login" ||
-    location.pathname === "/register";
+    location.pathname === "/register" ||
+    location.pathname === "/verify" ||
+    location.pathname === "/change-password";
 
   return (
     <>
@@ -129,7 +131,7 @@ const AppContent = () => {
         <Route path="/reset-password/:token" element={<ResetPassword />} />
         <Route path="/change-password" element={<ChangePassword />} />
 
-        <Route path="/verify/:token" element={<VerifyEmail />} />
+        {/* <Route path="/verify/:token" element={<VerifyEmail />} /> */}
         <Route path="/verify" element={<VerifyPage />} />
 
         <Route path="/my-borrowed-books" element={<MyBorrowedBooks />} />
