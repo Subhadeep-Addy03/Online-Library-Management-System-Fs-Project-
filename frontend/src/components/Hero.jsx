@@ -282,7 +282,6 @@
 // };
 
 // export default Hero;
-
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import libraryHero from "../assests/library-bg.jpg";
@@ -314,7 +313,8 @@ const Hero = () => {
                 min-h-[calc(100dvh-64px)]
                 sm:min-h-[calc(100dvh-70px)]
                 relative
-                flex items-center
+                flex
+                items-center
                 bg-cover
                 bg-center
                 bg-no-repeat
@@ -325,20 +325,50 @@ const Hero = () => {
         >
             <div className="absolute inset-0 bg-black/70"></div>
 
-            <div className="absolute -top-32 -left-32 w-72 h-72 sm:w-96 sm:h-96 bg-blue-600/15 rounded-full blur-3xl"></div>
+            <div className="absolute -top-24 -left-24 w-56 h-56 sm:w-96 sm:h-96 sm:-top-32 sm:-left-32 bg-blue-600/15 rounded-full blur-3xl"></div>
 
-            <div className="absolute -bottom-32 -right-32 w-72 h-72 sm:w-96 sm:h-96 bg-indigo-600/15 rounded-full blur-3xl"></div>
+            <div className="absolute -bottom-24 -right-24 w-56 h-56 sm:w-96 sm:h-96 sm:-bottom-32 sm:-right-32 bg-indigo-600/15 rounded-full blur-3xl"></div>
 
-            <div className="relative z-10 w-full max-w-7xl mx-auto px-2 min-[375px]:px-3 sm:px-5 md:px-8 lg:px-10 py-8 min-[375px]:py-10 sm:py-14 lg:py-16">
+            <div
+                className="
+                    relative
+                    z-10
+                    w-full
+                    max-w-7xl
+                    mx-auto
+                    px-3
+                    min-[375px]:px-4
+                    sm:px-6
+                    md:px-8
+                    lg:px-10
+                    py-8
+                    min-[375px]:py-10
+                    sm:py-14
+                    lg:py-16
+                "
+            >
 
-                <div className="max-w-4xl mx-auto lg:mx-0 text-center lg:text-left">
+                <div
+                    className="
+                        w-full
+                        max-w-4xl
+                        mx-auto
+                        lg:mx-0
+                        text-center
+                        lg:text-left
+                    "
+                >
 
                     <div
                         className="
                             inline-flex
+                            max-w-full
                             items-center
-                            gap-2
-                            px-3
+                            justify-center
+                            gap-1.5
+                            min-[375px]:gap-2
+                            px-2.5
+                            min-[375px]:px-3
                             py-1.5
                             rounded-full
                             bg-white/5
@@ -350,17 +380,31 @@ const Hero = () => {
                             sm:mb-5
                         "
                     >
-                        <span className="w-1.5 h-1.5 rounded-full bg-blue-400 shadow-[0_0_10px_rgba(96,165,250,0.9)]"></span>
+                        <span className="w-1.5 h-1.5 shrink-0 rounded-full bg-blue-400 shadow-[0_0_10px_rgba(96,165,250,0.9)]"></span>
 
-                        <span className="text-[9px] min-[375px]:text-[10px] sm:text-xs text-blue-200 font-semibold uppercase tracking-widest">
+                        <span
+                            className="
+                                text-[8px]
+                                min-[375px]:text-[9px]
+                                sm:text-xs
+                                text-blue-200
+                                font-semibold
+                                uppercase
+                                tracking-[0.12em]
+                                min-[375px]:tracking-[0.16em]
+                                whitespace-nowrap
+                            "
+                        >
                             Welcome To Our Online Library
                         </span>
                     </div>
 
                     <h1
                         className="
-                            text-3xl
-                            min-[375px]:text-[34px]
+                            w-full
+                            text-[29px]
+                            min-[375px]:text-[33px]
+                            min-[425px]:text-[36px]
                             sm:text-5xl
                             md:text-6xl
                             lg:text-6xl
@@ -376,6 +420,7 @@ const Hero = () => {
                         <span
                             className="
                                 block
+                                mt-1
                                 text-transparent
                                 bg-clip-text
                                 bg-gradient-to-r
@@ -390,7 +435,12 @@ const Hero = () => {
 
                     <p
                         className="
+                            w-full
+                            max-w-2xl
+                            mx-auto
+                            lg:mx-0
                             mt-4
+                            min-[375px]:mt-5
                             sm:mt-5
                             text-[11px]
                             min-[375px]:text-xs
@@ -398,10 +448,7 @@ const Hero = () => {
                             md:text-base
                             lg:text-lg
                             text-gray-300
-                            leading-relaxed
-                            max-w-2xl
-                            mx-auto
-                            lg:mx-0
+                            leading-[1.65]
                         "
                     >
                         Discover books, borrow what you need, track your
@@ -412,13 +459,14 @@ const Hero = () => {
                     <div
                         className="
                             mt-6
-                            sm:mt-7
+                            min-[375px]:mt-7
                             flex
                             flex-wrap
                             items-center
                             justify-center
                             lg:justify-start
                             gap-2.5
+                            min-[375px]:gap-3
                             sm:gap-3
                         "
                     >
@@ -428,7 +476,8 @@ const Hero = () => {
                                 inline-flex
                                 items-center
                                 justify-center
-                                gap-2
+                                gap-1.5
+                                min-[375px]:gap-2
                                 px-4
                                 min-[375px]:px-5
                                 sm:px-6
@@ -454,6 +503,7 @@ const Hero = () => {
                                 active:scale-95
                                 transition-all
                                 duration-300
+                                whitespace-nowrap
                             "
                         >
                             <span>Browse Books</span>
@@ -467,7 +517,8 @@ const Hero = () => {
                                     inline-flex
                                     items-center
                                     justify-center
-                                    gap-2
+                                    gap-1.5
+                                    min-[375px]:gap-2
                                     px-4
                                     min-[375px]:px-5
                                     sm:px-6
@@ -490,6 +541,7 @@ const Hero = () => {
                                     active:scale-95
                                     transition-all
                                     duration-300
+                                    whitespace-nowrap
                                 "
                             >
                                 <span>Get Started</span>
@@ -501,41 +553,94 @@ const Hero = () => {
                     <div
                         className="
                             mt-7
+                            min-[375px]:mt-8
                             sm:mt-9
-                            flex
-                            flex-wrap
-                            justify-center
-                            lg:justify-start
+                            grid
+                            grid-cols-1
+                            min-[375px]:grid-cols-3
                             gap-2
+                            min-[375px]:gap-2
                             sm:gap-3
+                            w-full
                         "
                     >
-                        <div className="flex items-center gap-2 px-3 py-2 bg-black/30 backdrop-blur-md border border-white/10 rounded-lg">
-                            <span className="text-green-400 text-xs sm:text-sm">
+                        <div
+                            className="
+                                flex
+                                items-center
+                                justify-center
+                                min-[375px]:justify-start
+                                gap-2
+                                px-3
+                                py-2
+                                min-[375px]:py-2.5
+                                bg-black/30
+                                backdrop-blur-md
+                                border
+                                border-white/10
+                                rounded-lg
+                                min-w-0
+                            "
+                        >
+                            <span className="text-green-400 text-xs sm:text-sm shrink-0">
                                 ✓
                             </span>
 
-                            <span className="text-[9px] min-[375px]:text-[10px] sm:text-xs text-gray-300">
+                            <span className="text-[9px] min-[375px]:text-[10px] sm:text-xs text-gray-300 truncate">
                                 Easy Management
                             </span>
                         </div>
 
-                        <div className="flex items-center gap-2 px-3 py-2 bg-black/30 backdrop-blur-md border border-white/10 rounded-lg">
-                            <span className="text-blue-400 text-xs sm:text-sm">
+                        <div
+                            className="
+                                flex
+                                items-center
+                                justify-center
+                                min-[375px]:justify-start
+                                gap-2
+                                px-3
+                                py-2
+                                min-[375px]:py-2.5
+                                bg-black/30
+                                backdrop-blur-md
+                                border
+                                border-white/10
+                                rounded-lg
+                                min-w-0
+                            "
+                        >
+                            <span className="text-blue-400 text-xs sm:text-sm shrink-0">
                                 ⚡
                             </span>
 
-                            <span className="text-[9px] min-[375px]:text-[10px] sm:text-xs text-gray-300">
+                            <span className="text-[9px] min-[375px]:text-[10px] sm:text-xs text-gray-300 truncate">
                                 Fast Borrowing
                             </span>
                         </div>
 
-                        <div className="flex items-center gap-2 px-3 py-2 bg-black/30 backdrop-blur-md border border-white/10 rounded-lg">
-                            <span className="text-purple-400 text-xs sm:text-sm">
+                        <div
+                            className="
+                                flex
+                                items-center
+                                justify-center
+                                min-[375px]:justify-start
+                                gap-2
+                                px-3
+                                py-2
+                                min-[375px]:py-2.5
+                                bg-black/30
+                                backdrop-blur-md
+                                border
+                                border-white/10
+                                rounded-lg
+                                min-w-0
+                            "
+                        >
+                            <span className="text-purple-400 text-xs sm:text-sm shrink-0">
                                 🔒
                             </span>
 
-                            <span className="text-[9px] min-[375px]:text-[10px] sm:text-xs text-gray-300">
+                            <span className="text-[9px] min-[375px]:text-[10px] sm:text-xs text-gray-300 truncate">
                                 Secure Access
                             </span>
                         </div>
@@ -546,51 +651,113 @@ const Hero = () => {
                 <div
                     className="
                         mt-8
+                        min-[375px]:mt-9
                         sm:mt-10
                         lg:mt-12
                         pt-5
-                        sm:pt-6
+                        min-[375px]:pt-6
                         border-t
                         border-white/10
                         grid
                         grid-cols-3
-                        gap-2
+                        gap-1
+                        min-[375px]:gap-2
                         sm:gap-5
+                        w-full
                         max-w-2xl
                     "
                 >
 
-                    <div className="text-center lg:text-left">
+                    <div className="text-center lg:text-left min-w-0">
 
-                        <h3 className="text-lg min-[375px]:text-xl sm:text-2xl font-bold text-white">
+                        <h3
+                            className="
+                                text-lg
+                                min-[375px]:text-xl
+                                sm:text-2xl
+                                font-bold
+                                text-white
+                            "
+                        >
                             Easy
                         </h3>
 
-                        <p className="text-[8px] min-[375px]:text-[9px] sm:text-xs text-gray-400 mt-1">
+                        <p
+                            className="
+                                text-[8px]
+                                min-[375px]:text-[9px]
+                                sm:text-xs
+                                text-gray-400
+                                mt-1
+                                truncate
+                            "
+                        >
                             Book Management
                         </p>
 
                     </div>
 
-                    <div className="text-center lg:text-left border-x border-white/10">
+                    <div
+                        className="
+                            text-center
+                            lg:text-left
+                            min-w-0
+                            border-x
+                            border-white/10
+                        "
+                    >
 
-                        <h3 className="text-lg min-[375px]:text-xl sm:text-2xl font-bold text-white">
+                        <h3
+                            className="
+                                text-lg
+                                min-[375px]:text-xl
+                                sm:text-2xl
+                                font-bold
+                                text-white
+                            "
+                        >
                             Fast
                         </h3>
 
-                        <p className="text-[8px] min-[375px]:text-[9px] sm:text-xs text-gray-400 mt-1">
+                        <p
+                            className="
+                                text-[8px]
+                                min-[375px]:text-[9px]
+                                sm:text-xs
+                                text-gray-400
+                                mt-1
+                                truncate
+                            "
+                        >
                             Borrow & Return
                         </p>
 
                     </div>
 
-                    <div className="text-center lg:text-left">
+                    <div className="text-center lg:text-left min-w-0">
 
-                        <h3 className="text-lg min-[375px]:text-xl sm:text-2xl font-bold text-white">
+                        <h3
+                            className="
+                                text-lg
+                                min-[375px]:text-xl
+                                sm:text-2xl
+                                font-bold
+                                text-white
+                            "
+                        >
                             Secure
                         </h3>
 
-                        <p className="text-[8px] min-[375px]:text-[9px] sm:text-xs text-gray-400 mt-1">
+                        <p
+                            className="
+                                text-[8px]
+                                min-[375px]:text-[9px]
+                                sm:text-xs
+                                text-gray-400
+                                mt-1
+                                truncate
+                            "
+                        >
                             User Authentication
                         </p>
 
