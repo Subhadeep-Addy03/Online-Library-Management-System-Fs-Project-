@@ -423,7 +423,7 @@ const Fine = () => {
                                             !borrow.finePaid && (
                                                 <>
                                                     <div className="w-full mt-3 sm:mt-5 py-2 min-[375px]:py-2.5 text-center bg-red-50 text-red-600 text-[9px] min-[375px]:text-xs sm:text-sm font-semibold rounded-lg sm:rounded-xl">
-                                                        ⚠️ Book Is Overdue 
+                                                        ⚠️ Book Overdue 
                                                     </div>
 
                                                     <button
